@@ -56,7 +56,7 @@ def split_lineages(lin):
         list of dictionaries, each dictionary gives properties of cell from birth to division
     """
     new_lin = []
-    lut = np.empty((0,5)) #id / first frame / last_frame / new_cell_id / colony_id
+    lut = np.empty((0,6)) #id / first frame / last_frame / new_cell_id / colony_id / gen
     id_cell = 0 
     
     firstcells = lin.cellnumbers[0]
@@ -66,27 +66,30 @@ def split_lineages(lin):
         div_time = [i for i, val in enumerate(cell['daughters']) if val != None]
         ndiv = len(div_time)
         
-        for i in range(ndiv+1):
-            
+        for i in range(ndiv+1):            
             if i==0:
                 if cell['mother'] is not None:
                     corr_cell = lut[:,0] == cell['mother']
                     corr_frame = (lut[:,2] == cell['frames'][0]-1)
                     id_par = int(lut[np.all((corr_cell, corr_frame), axis=0),3])
                     id_colony = int(lut[np.all((corr_cell, corr_frame), axis=0),4])
+                    gen = int(lut[np.all((corr_cell, corr_frame), axis=0),5]) + 1
                 else: 
                     id_par = -1  
-                    id_colony = id if  id in firstcells else -1             
-            else: id_par = id_cell - 1
+                    id_colony = id if id in firstcells else -1  
+                    gen = 0 if id in firstcells else np.nan 
+            else: 
+                id_par = id_cell - 1
+                gen += 1
                 
            
             if ndiv == 0:
                 new_cell = cell.copy()
-                cur_lut = [id, cell['frames'][0], cell['frames'][-1], id_cell, id_colony]
+                cur_lut = [id, cell['frames'][0], cell['frames'][-1], id_cell, id_colony, gen]
             else:
                 start = div_time[i-1] if i>0 else 0
                 end = div_time[i] if i<ndiv else len(cell['frames'])   
-                cur_lut = [id, cell['frames'][start], cell['frames'][end-1], id_cell, id_colony]    
+                cur_lut = [id, cell['frames'][start], cell['frames'][end-1], id_cell, id_colony, gen]    
                         
                 new_cell = {}
                 for key, item in cell.items():
@@ -102,6 +105,8 @@ def split_lineages(lin):
             new_cell['id_cell'] = id_cell 
             new_cell['id_par'] = id_par 
             new_cell['id_colony'] = id_colony 
+            new_cell['generation'] = gen
+            new_cell['age'] = new_cell['frames'] - new_cell['frames'][0]
 
                 
             lut = np.concatenate((lut, np.array(cur_lut)[np.newaxis,:]))               
