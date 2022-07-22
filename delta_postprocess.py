@@ -6,6 +6,7 @@ from skimage.measure import regionprops
 from delta.pipeline import Position as delta_pos
 import pathlib
 
+
 def add_segment_info(lin, label_stack):
     """Adds positional information of cells to lineage object
 
