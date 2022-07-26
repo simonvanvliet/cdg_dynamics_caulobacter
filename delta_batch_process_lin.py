@@ -12,8 +12,8 @@ def to_str(posixpath):
     return str(posixpath.resolve())   
 
 #set paths
-root = pathlib.Path(pathlib.Path.home(), 'home', 'Delta2_Caulobacter')
-data_dir = root / 'data' / 'rawdatalin'
+root = pathlib.Path('/Users/simonvanvliet/switchdrive/Biozentrum/Andreas/')
+data_dir = pathlib.Path('/Volumes/RG-UJ01-Data01/Andreas/20220722_Movies for lineages/')
 
 #create output dir
 output_root = root / 'processed_datalin'
