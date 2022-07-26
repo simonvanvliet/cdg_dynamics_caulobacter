@@ -29,4 +29,4 @@ export LD_LIBRARY_PATH="$CONDA_PREFIX/lib/"
 
 #add your command lines below
 #############################
-python -u delta_batch_process.py > delta_python_log-%J.out 
+python -u delta_batch_process_lin.py > delta_python_log-%J.out 
