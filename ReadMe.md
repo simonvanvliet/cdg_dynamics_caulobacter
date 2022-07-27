@@ -30,3 +30,7 @@ To replicate the results follow the following steps:
 
 - `delta_postprocess.py`: helper functions to convert Delta lineage object into Panda date frame with lineages separated into separate tracks
 - `plot_lineage_tree.py`: class definition of function used to plot lineage trees
+
+### Data Files
+
+The data_files folder contains data frames of the filtered cell lineages.
