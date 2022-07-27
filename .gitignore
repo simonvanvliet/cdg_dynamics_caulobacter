@@ -7,6 +7,8 @@ __pycache__/
 .vscode/
 *.oe
 
+.DS_Store 
+
 # C extensions
 *.so
 
