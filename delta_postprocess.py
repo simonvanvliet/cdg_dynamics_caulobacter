@@ -1,4 +1,3 @@
-from importlib.resources import path
 from logging import exception
 import numpy as np
 import pandas as pd
@@ -45,7 +44,7 @@ def add_segment_info(lin, label_stack):
     return None
 
 def split_lineages(lin):
-    """converts delta lineage object, by splitting cell lineages at division
+    """converts delta lineage object, by splitting cell lineages at division into single tracks (note: track is cell from birth to division)
 
     Parameters
     ----------
@@ -57,41 +56,54 @@ def split_lineages(lin):
         list of dictionaries, each dictionary gives properties of cell from birth to division
     """
     new_lin = []
+    
+    #create LUT to match cells to mother properties
     lut = np.empty((0,6), dtype=np.float32) #id / first frame / last_frame / new_cell_id / colony_id / gen
     id_cell = 0 
     
+    #loop iteratively over all cells
     firstcells = lin.cellnumbers[0]
-
     for id, cell in enumerate(lin.cells):
         #find division events
         div_time = [i for i, val in enumerate(cell['daughters']) if val != None]
         ndiv = len(div_time)
         
+        #loop over all tracks in lineage 
         for i in range(ndiv+1):            
             if i==0:
+                #first track in lineage
                 if cell['mother'] is not None:
+                    #cell has mom, get properties of mom
                     corr_cell = lut[:,0] == cell['mother']
                     corr_frame = (lut[:,2] == cell['frames'][0]-1)
                     id_par = int(lut[np.all((corr_cell, corr_frame), axis=0),3])
                     id_colony = int(lut[np.all((corr_cell, corr_frame), axis=0),4])
                     gen = lut[np.all((corr_cell, corr_frame), axis=0),5].item() + 1
                 else: 
+                    #cell has no mom
                     id_par = -1  
                     id_colony = id if id in firstcells else -1  
                     gen = 0 if id in firstcells else np.nan 
             else: 
-                id_par = id_cell - 1
+                #later track in lineage
+                id_par = id_cell - 1 #parent is previous track
                 gen += 1
                 
            
             if ndiv == 0:
+                #no splitting needed, copy old lineage objects
                 new_cell = cell.copy()
+                #add info to LUT
                 cur_lut = [id, cell['frames'][0], cell['frames'][-1], id_cell, id_colony, gen]
             else:
+                #find start and end frame of track
                 start = div_time[i-1] if i>0 else 0
                 end = div_time[i] if i<ndiv else len(cell['frames'])   
+                
+                #add properties to lut
                 cur_lut = [id, cell['frames'][start], cell['frames'][end-1], id_cell, id_colony, gen]    
                         
+                #extract track from lineage
                 new_cell = {}
                 for key, item in cell.items():
                     if isinstance(item, list):
@@ -99,7 +111,7 @@ def split_lineages(lin):
                     else:
                         new_cell[key] = item
                                             
-            
+            #add new fields to lineage
             _ = new_cell.pop('mother')
             _ = new_cell.pop('daughters')
             new_cell['id_seg'] = new_cell.pop('id')
@@ -116,6 +128,7 @@ def split_lineages(lin):
             new_lin.append(new_cell) 
             id_cell += 1   
     return new_lin
+
 
 def lin_to_df(cell_list):
     """Convert list of dictionaries into dataframe
@@ -141,6 +154,7 @@ def lin_to_df(cell_list):
     df = df.reset_index(drop=True)
 
     return df
+
 
 def add_exra_lin_info(df):
     """Add extra lineage info of cell to dataframe
@@ -216,7 +230,6 @@ def delta_to_df(input):
     else:
         exception("Please input a delta position object or a valid path to a delta position object")
         
-    
     #get lineage
     lin = pos.rois[0].lineage
     
