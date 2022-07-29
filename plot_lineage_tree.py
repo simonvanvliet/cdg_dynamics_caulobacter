@@ -69,49 +69,51 @@ class lin_tree():
         """
         #get frames cell
         frames = self.df.loc[self.df['id_cell']==cellid, 'frames'].to_list()
-        #get property cell
-        props = self.df.loc[self.df['id_cell']==cellid, self.cell_prop].to_list()
         
-        for fr, prop in zip(frames, props):
-            #add current node
-            self.x.append(xc)
-            self.y.append(fr * self.dt)
-            self.c.append(prop)
+        if len(frames) > 0:
+            #get property cell
+            props = self.df.loc[self.df['id_cell']==cellid, self.cell_prop].to_list()
             
-            #add edge to next frame
-            if fr < frames[-1]:
+            for fr, prop in zip(frames, props):
+                #add current node
+                self.x.append(xc)
+                self.y.append(fr * self.dt)
+                self.c.append(prop)
+                
+                #add edge to next frame
+                if fr < frames[-1]:
+                    self.xl1.append(xc)
+                    self.xl2.append(xc)
+                    self.yl1.append(fr * self.dt)
+                    self.yl2.append((fr+1) * self.dt)  
+            
+            
+            #reduce spacing for next generation              
+            dx = dx/2
+                
+            #recursively call on next generation, d1        
+            d1 = self.df.loc[self.df['id_cell']==cellid, 'id_d1'].unique().item() 
+            if d1 > -1:
+                xc_d1 = xc - dx
+                self._add_cell_to_lin(d1, xc_d1, dx)
+                
+                #add connecting edge
                 self.xl1.append(xc)
-                self.xl2.append(xc)
-                self.yl1.append(fr * self.dt)
-                self.yl2.append((fr+1) * self.dt)  
-         
-           
-        #reduce spacing for next generation              
-        dx = dx/2
-            
-        #recursively call on next generation, d1        
-        d1 = self.df.loc[self.df['id_cell']==cellid, 'id_d1'].unique().item() 
-        if d1 > -1:
-            xc_d1 = xc - dx
-            self._add_cell_to_lin(d1, xc_d1, dx)
-            
-            #add connecting edge
-            self.xl1.append(xc)
-            self.xl2.append(xc_d1)
-            self.yl1.append(frames[-1] * self.dt)
-            self.yl2.append((frames[-1]+1) * self.dt)
+                self.xl2.append(xc_d1)
+                self.yl1.append(frames[-1] * self.dt)
+                self.yl2.append((frames[-1]+1) * self.dt)
 
-         #recursively call on next generation, d2 
-        d2 = self.df.loc[self.df['id_cell']==cellid, 'id_d2'].unique().item()  
-        if d2 > -1:
-            xc_d2 = xc + dx
-            self._add_cell_to_lin(d2, xc_d2, dx)
-            
-            #add connecting edge
-            self.xl1.append(xc)
-            self.xl2.append(xc_d2)
-            self.yl1.append(frames[-1] * self.dt)
-            self.yl2.append((frames[-1]+1) * self.dt)
+            #recursively call on next generation, d2 
+            d2 = self.df.loc[self.df['id_cell']==cellid, 'id_d2'].unique().item()  
+            if d2 > -1:
+                xc_d2 = xc + dx
+                self._add_cell_to_lin(d2, xc_d2, dx)
+                
+                #add connecting edge
+                self.xl1.append(xc)
+                self.xl2.append(xc_d2)
+                self.yl1.append(frames[-1] * self.dt)
+                self.yl2.append((frames[-1]+1) * self.dt)
     
     
     def plot(self, cb_label=None, cb_lim=None, marker_size=4, line_width=1, fig_size=(8,5), marker_type='s'):
