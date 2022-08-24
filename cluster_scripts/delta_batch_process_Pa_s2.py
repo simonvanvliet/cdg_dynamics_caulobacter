@@ -28,6 +28,9 @@ cfg.save_format = ('pickle','movie')
 #find subfolders
 folder_names = [f.name for f in sorted(data_dir.glob('UJP*'))]
 
+print(folder_names)
+
+
 for folder in folder_names:
     #get images in subfolder
     movie_names = [f.name for f in sorted((data_dir / folder).glob('*.tif*'))]
