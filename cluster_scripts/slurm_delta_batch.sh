@@ -5,7 +5,7 @@
 #SBATCH --qos=1day    
 #SBATCH --cpus-per-task=4
 #SBATCH --mem=64G
-#SBATCH --partition=rtx8000  #a100 or rtx8000
+#SBATCH --partition=a100  #a100 or rtx8000
 #SBATCH --gres=gpu:1        
 
 # Paths to STDOUT or STDERR files should be absolute or relative to current working directory
@@ -29,5 +29,5 @@ export LD_LIBRARY_PATH="$CONDA_PREFIX/lib/"
 
 #add your command lines below
 #############################
-python -u delta_batch_process_Cc.py > delta_python_log-%J.out 
+python -u delta_batch_process_Cc_s2.py > delta_python_log-%J.out 
 #python -u delta_batch_process_PA.py > delta_python_log-%J.out 

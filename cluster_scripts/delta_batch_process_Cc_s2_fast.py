@@ -13,10 +13,10 @@ def to_str(posixpath):
 
 #set paths
 root = pathlib.Path(pathlib.Path.home(), 'home', 'Delta2_Caulobacter')
-data_dir = root / 'data' / 'Cc'
+data_dir = root / 'data' / 'CcFast'
 
 #create output dir
-output_root = root / 'processed_Cc2'
+output_root = root / 'processed_Cc_Fast'
 (output_root).mkdir(exist_ok=True) #create output data folder,  each position will be placed in a subfolder
 
 #get config file
