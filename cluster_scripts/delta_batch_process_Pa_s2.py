@@ -26,8 +26,7 @@ cfg.model_file_seg = to_str(root / 'models' / 'unet_pads_seg.hdf5')
 cfg.save_format = ('pickle','movie')
 
 #find subfolders
-folder_names = [f.name for f in sorted(data_dir.glob('UJP*'))]
-
+folder_names = [f.name for f in sorted(data_dir.glob('*'))]
 print(folder_names)
 
 

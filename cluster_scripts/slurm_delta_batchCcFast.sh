@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#SBATCH --job-name=Delta2_Batch
+#SBATCH --job-name=Delta2_BatchCcFast
 #SBATCH --time=6:00:00
 #SBATCH --qos=6hours    
 #SBATCH --cpus-per-task=4
@@ -29,5 +29,7 @@ export LD_LIBRARY_PATH="$CONDA_PREFIX/lib/"
 
 #add your command lines below
 #############################
-python -u delta_batch_process_Cc_s2.py > delta_python_log-%J.out 
-#python -u delta_batch_process_PA.py > delta_python_log-%J.out 
+LOGFILE = delta_python_log-CcFast.txt 
+ERRFILE = delta_python_err-CcFast.txt 
+
+python -u delta_batch_process_Cc_s2_fast.py > 2> $ERRFILE  1>$LOGFILE 

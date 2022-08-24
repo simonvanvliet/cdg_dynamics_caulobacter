@@ -13,7 +13,7 @@ def to_str(posixpath):
 
 #set paths
 root = pathlib.Path(pathlib.Path.home(), 'home', 'Delta2_Caulobacter')
-data_dir = root / 'data' / 'CcFast'
+data_dir = root / 'data' / 'Cc_Fast'
 
 #create output dir
 output_root = root / 'processed_Cc_Fast'
