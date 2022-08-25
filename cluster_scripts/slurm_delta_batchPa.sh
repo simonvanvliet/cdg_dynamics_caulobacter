@@ -33,4 +33,4 @@ export LD_LIBRARY_PATH="$CONDA_PREFIX/lib/"
 LOGFILE=delta_python_log-Pa-${SLURM_JOB_ID}.oe 
 ERRFILE=delta_python_err-Pa-${SLURM_JOB_ID}.oe 
 
-python -u delta_batch_process_Pa_s2.py 2>$ERRFILE  1>$LOGFILE 
+python -u delta_batch_process_Pa_s3.py 2>$ERRFILE  1>$LOGFILE 
