@@ -5,7 +5,7 @@
 #SBATCH --qos=6hours    
 #SBATCH --cpus-per-task=4
 #SBATCH --mem=32G
-#SBATCH --partition=a100  #a100 or rtx8000
+#SBATCH --partition=rtx8000  #a100 or rtx8000
 #SBATCH --gres=gpu:1        
 
 # Paths to STDOUT or STDERR files should be absolute or relative to current working directory
