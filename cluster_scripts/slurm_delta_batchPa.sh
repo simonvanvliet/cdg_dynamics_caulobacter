@@ -4,8 +4,8 @@
 #SBATCH --time=6:00:00
 #SBATCH --qos=6hours    
 #SBATCH --cpus-per-task=4
-#SBATCH --mem=32G
-#SBATCH --partition=rtx8000  #a100 or rtx8000
+#SBATCH --mem=64G
+#SBATCH --partition=rtx8000,a100
 #SBATCH --gres=gpu:1        
 
 # Paths to STDOUT or STDERR files should be absolute or relative to current working directory
@@ -15,24 +15,21 @@
 
 #This job runs from the current working directory
 
+#load your required modules below
+#################################
 ml Java/11.0.3_7
 ml FFmpeg
 
-#load your required modules below
-#################################
 eval "$(conda shell.bash hook)"
 conda activate delta2_env
 export LD_LIBRARY_PATH="$CONDA_PREFIX/lib/"
 
-#export your required environment variables below
-#################################################
-
 #add your command lines below
 #############################
+#-u forces stdout to print directly
+python -u delta_batch_process_Pa_s3.py
+echo Finished
 
-LOGFILE=delta_python_log-Pa-${SLURM_JOB_ID}.oe 
-ERRFILE=delta_python_err-Pa-${SLURM_JOB_ID}.oe 
-
-python -u delta_batch_process_Pa_s3.py 2>$ERRFILE  1>$LOGFILE 
-
-echo Finished Bash
+# LOGFILE=delta_python_log-CcFast-${SLURM_JOB_ID}.oe 
+# ERRFILE=delta_python_err-CcFast-${SLURM_JOB_ID}.oe 
+# python -u delta_batch_process_Cc_s2_fast.py 2>$ERRFILE  1>$LOGFILE 
