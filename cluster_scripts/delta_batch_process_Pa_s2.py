@@ -74,3 +74,6 @@ for folder in folder_names:
 
 
 
+#exit python
+import os
+os._exit(os.EX_OK)

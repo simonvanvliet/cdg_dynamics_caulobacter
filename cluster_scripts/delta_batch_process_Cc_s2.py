@@ -73,4 +73,6 @@ for folder in folder_names:
             print('error with movie %s->%s, skipping to next' %(folder,movie_name_short)) 
 
 
-
+#exit python
+import os
+os._exit(os.EX_OK)
