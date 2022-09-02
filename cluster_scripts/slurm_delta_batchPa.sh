@@ -27,7 +27,7 @@ export LD_LIBRARY_PATH="$CONDA_PREFIX/lib/"
 #add your command lines below
 #############################
 #-u forces stdout to print directly
-python -u delta_batch_process_Pa_s3.py
+python -u delta_batch_process_Pa_Twitch.py
 echo Finished
 
 # LOGFILE=delta_python_log-CcFast-${SLURM_JOB_ID}.oe 
