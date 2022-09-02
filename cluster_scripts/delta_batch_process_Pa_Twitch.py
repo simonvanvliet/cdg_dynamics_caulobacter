@@ -43,7 +43,7 @@ for movie in movie_names:
     (output_dir).mkdir(exist_ok=True)
 
     try:  
-        print('starting with movie %s->%s' %(movie_name_short)) 
+        print('starting with movie %s' %(movie_name_short)) 
         # Init reader (use bioformats=True if working with nd2, czi, ome-tiff etc):
         im_reader = xpreader(movie_dir, use_bioformats=True)
 
@@ -61,7 +61,7 @@ for movie in movie_names:
         xp.process()
         
     except:
-        print('error with movie %s->%s, skipping to next' %(movie_name_short)) 
+        print('error with movie %s, skipping to next' %(movie_name_short)) 
 
 
 #exit python
