@@ -13,10 +13,10 @@ def to_str(posixpath):
 
 #set paths
 root = pathlib.Path(pathlib.Path.home(), 'home', 'Delta2_Caulobacter')
-data_dir = root / 'Twitching' 
+data_dir = root / 'Twitching' / 'tiffiles'
 
 #create output dir
-output_path = root / 'processed_dataTwitching'
+output_path = root / 'processed_dataTwitching2'
 (output_path).mkdir(exist_ok=True) #create output data folder,  each position will be placed in a subfolder
 
 #get config file
@@ -25,45 +25,26 @@ cfg.load_config(config_file)
 cfg.model_file_seg = to_str(root / 'models' / 'unet_pads_seg.hdf5') 
 cfg.save_format = ('pickle','movie')
 
+# Init reader (use bioformats=True if working with nd2, czi, ome-tiff etc):
+im_reader = xpreader(
+    to_str(data_dir), 
+    prototype = 'pos%01i_ch%01i_frm%04i.tif',
+    fileorder = 'pct',
+    filenamesindexing=0)
 
-movie_names = [f.name for f in sorted((data_dir).glob('*.tif*'))]
+# Print experiment parameters to make sure it initialized properly:
+print("""Initialized experiment reader:
+    - %d positions
+    - %d imaging channels
+    - %d timepoints"""%(im_reader.positions, im_reader.channels, im_reader.timepoints)
+)
 
+# Init pipeline:
+xp = Pipeline(im_reader, resfolder=to_str(output_path))   
 
-for movie in movie_names:        
-    #path to current position
-    movie_dir = data_dir / movie
+# Run pipeline
+xp.process()
     
-    #make nickname of movei (adapt to file name structure, here we take the part starting at TL and stopping before __R3D)
-    start = movie.find('TL')
-    end = movie.find('_R3D', start)
-    movie_name_short = movie[start:end]
-    
-    #make subfolder for current position
-    output_dir = output_path / movie_name_short
-    (output_dir).mkdir(exist_ok=True)
-
-    try:  
-        print('starting with movie %s' %(movie_name_short)) 
-        # Init reader (use bioformats=True if working with nd2, czi, ome-tiff etc):
-        im_reader = xpreader(movie_dir, use_bioformats=True)
-
-        # Print experiment parameters to make sure it initialized properly:
-        print("""Initialized experiment reader:
-            - %d positions
-            - %d imaging channels
-            - %d timepoints"""%(im_reader.positions, im_reader.channels, im_reader.timepoints)
-        )
-
-        # Init pipeline:
-        xp = Pipeline(im_reader, resfolder=to_str(output_dir))   
-
-        # Run pipeline
-        xp.process(frames=list(range(500)))
-        
-    except:
-        print('error with movie %s, skipping to next' %(movie_name_short)) 
-
-
 #exit python
 import os
 os._exit(os.EX_OK)
