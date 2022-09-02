@@ -1,5 +1,4 @@
 #!/bin/bash
-
 #SBATCH --job-name=Delta2_BatchPa
 #SBATCH --time=6:00:00
 #SBATCH --qos=6hours    

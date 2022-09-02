@@ -1,5 +1,4 @@
 #!/bin/bash
-
 #SBATCH --job-name=convert
 #SBATCH --time=0:30:00
 #SBATCH --qos=30min    
