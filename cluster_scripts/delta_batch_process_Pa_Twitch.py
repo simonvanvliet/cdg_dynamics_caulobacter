@@ -45,7 +45,7 @@ for movie in movie_names:
     try:  
         print('starting with movie %s' %(movie_name_short)) 
         # Init reader (use bioformats=True if working with nd2, czi, ome-tiff etc):
-        im_reader = xpreader(movie_dir) #, use_bioformats=True)
+        im_reader = xpreader(movie_dir, use_bioformats=True)
 
         # Print experiment parameters to make sure it initialized properly:
         print("""Initialized experiment reader:
@@ -58,7 +58,7 @@ for movie in movie_names:
         xp = Pipeline(im_reader, resfolder=to_str(output_dir))   
 
         # Run pipeline
-        xp.process()
+        xp.process(frames=list(range(500)))
         
     except:
         print('error with movie %s, skipping to next' %(movie_name_short)) 
