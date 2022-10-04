@@ -13,7 +13,7 @@ def to_str(posixpath):
 
 #set paths
 root = pathlib.Path(pathlib.Path.home(), 'home', 'Delta2_Caulobacter')
-data_dir = root / 'Maya'
+data_dir = root / 'Maya' / 'cpdApch_1h_5s_001_R3D2.tif'
 
 #create output dir
 output_path = root / 'processed_Maya'
