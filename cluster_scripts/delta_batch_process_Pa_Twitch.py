@@ -13,10 +13,10 @@ def to_str(posixpath):
 
 #set paths
 root = pathlib.Path(pathlib.Path.home(), 'home', 'Delta2_Caulobacter')
-data_dir = root / 'Twitching' / 'tiffiles'
+data_dir = root / 'Maya'
 
 #create output dir
-output_path = root / 'processed_dataTwitching2'
+output_path = root / 'processed_Maya'
 (output_path).mkdir(exist_ok=True) #create output data folder,  each position will be placed in a subfolder
 
 #get config file
@@ -26,11 +26,11 @@ cfg.model_file_seg = to_str(root / 'models' / 'unet_pads_seg.hdf5')
 cfg.save_format = ('pickle','movie')
 
 # Init reader (use bioformats=True if working with nd2, czi, ome-tiff etc):
-im_reader = xpreader(
-    to_str(data_dir), 
-    prototype = 'pos%01i_ch%01i_frm%04i.tif',
-    fileorder = 'pct',
-    filenamesindexing=0)
+im_reader = xpreader(to_str(data_dir), use_bioformats=True)
+    # to_str(data_dir), 
+    # prototype = 'pos%01i_ch%01i_frm%04i.tif',
+    # fileorder = 'pct',
+    # filenamesindexing=0)
 
 # Print experiment parameters to make sure it initialized properly:
 print("""Initialized experiment reader:
