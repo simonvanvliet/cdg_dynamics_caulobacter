@@ -1,24 +1,46 @@
-{
-    "license": "MIT License", 
-    "title": "Code for: A genetically encoded biosensor to monitor dynamic changes of c-di-GMP with high temporal resolution", 
-    "creators": [
+{ 
+    "title": "Code for: A genetically encoded biosensor to monitor dynamic changes of c-di-GMP with high temporal resolution",
+    "description": "Data analysis code",
+    "license": "MIT License",
+    "creators":[
         {
-            "orcid": "0000-0002-6616-1777", 
-            "affiliation": "University of Basel", 
-            "name": "Andreas Kaczmarczyk"
+            "name": "Andreas Kaczmarczyk",
+            "affiliation": "University of Basel",
+            "orcid": "0000-0002-6616-1777"
+        
         }, 
         {
-            "orcid": "0000-0003-2532-483X", 
-            "affiliation": "University of Basel and University of Lausanne", 
-            "name": "Simon van Vliet,"
+            "name": "Simon van Vliet",
+            "affiliation": "University of Basel and University of Lausanne",
+            "orcid": "0000-0003-2532-483X"
+         }, 
+        {
+            "name": "Urs Jenal",
+            "affiliation": "University of Basel", 
+            "orcid": "0000-0002-1637-3376"
+        }
+    ],
+    "contributors":[
+        {
+            "name": "Andreas Kaczmarczyk",
+            "affiliation": "University of Basel",
+            "orcid": "0000-0002-6616-1777",
+            "type": "ProjectMember"
+            
         }, 
         {
-            "orcid": "0000-0002-1637-3376", 
+            "name": "Simon van Vliet",
+            "affiliation": "University of Basel and University of Lausanne",
+            "orcid": "0000-0003-2532-483X",
+            "type": "ProjectMember"
+
+        }, 
+        {
+            "name": "Urs Jenal",
             "affiliation": "University of Basel", 
-            "name": "Urs Jenal"
+            "orcid": "0000-0002-1637-3376",
+            "type": "ContactPerson"
+
         }
     ]
 }
-
-
- 
