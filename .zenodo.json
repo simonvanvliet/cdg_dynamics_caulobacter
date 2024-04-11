@@ -1,5 +1,4 @@
 {
-    "description": "This repository contains the code used for analyzing the single-cell microscopy data described in the following publication:\nA genetically encoded biosensor to monitor dynamic changes of c-di-GMP with high temporal resolution\nAndreas Kaczmarczyk, Simon van Vliet, Roman Peter Jakob, Raphael Dias Teixeira, Inga Scheidat, Alberto Reinders, Alexander Klotz, Timm Maier, Urs Jenal\nBiozentrum, University of Basel, 4056 Basel, Switzerland\nCorrespondence to: urs.jenal[at]unibas.ch, andreas.kaczmarczyk[at]unibas.ch", 
     "license": "MIT License", 
     "title": "Code for: A genetically encoded biosensor to monitor dynamic changes of c-di-GMP with high temporal resolution", 
     "creators": [
