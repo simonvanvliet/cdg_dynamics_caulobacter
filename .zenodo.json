@@ -1,7 +1,6 @@
 { 
     "title": "Code for: A genetically encoded biosensor to monitor dynamic changes of c-di-GMP with high temporal resolution",
     "description": "Data analysis code",
-    "license": "MIT License",
     "creators":[
         {
             "name": "Andreas Kaczmarczyk",
